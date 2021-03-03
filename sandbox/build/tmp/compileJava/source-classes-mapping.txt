@@ -1,4 +1,0 @@
-Point.java
- Point
-MyFirstProgram.java
- MyFirstProgram
