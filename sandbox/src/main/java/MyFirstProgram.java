@@ -9,7 +9,7 @@ public class MyFirstProgram{
         System.out.println("Run separate function " + distance(p1,p2));
 
         //Вычисление расстояния между точками при помощи метода в классе Point
-        double result = p1.distancePointMethod(p1,p2);
+        double result = p1.distancePointMethod(p2);
         System.out.println("Run method from class Point " + result);
 
     }

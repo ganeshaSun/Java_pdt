@@ -2,5 +2,7 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/sandbox/src/main/java/MyFirstProgram.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sandbox/src/main/java/Point.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sandbox/src/test/java/PointDistanceTests.java" charset="UTF-8" />
   </component>
 </project>
