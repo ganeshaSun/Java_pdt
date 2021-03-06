@@ -5,8 +5,8 @@ public class PointDistanceTests {
 
   @Test
   public void testDistance(){
-    Point p1 = new Point(12,10);
-    Point p2 = new Point(15,-20);
+    Point p1 = new Point(12,10 );
+    Point p2 = new Point(15,-20 );
     Assert.assertEquals(p1.distancePointMethod(p2),30.14962686336267 );
   }
 
