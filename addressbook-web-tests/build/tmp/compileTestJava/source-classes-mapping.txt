@@ -1,0 +1,2 @@
+ru/stqua/pft/addressbook/GroupCreation.java
+ ru.stqua.pft.addressbook.GroupCreation
