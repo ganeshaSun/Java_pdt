@@ -3,7 +3,7 @@ package ru.stqua.pft.addressbook.tests;
 import org.testng.annotations.*;
 
 
-public class GroupDeletionTests extends TestBase{
+public class GroupDeletionTest extends TestBase{
 
   @Test
   public void testGroupDeletion() throws Exception {

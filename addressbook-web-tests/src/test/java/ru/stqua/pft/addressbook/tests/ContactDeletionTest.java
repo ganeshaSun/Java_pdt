@@ -2,14 +2,14 @@ package ru.stqua.pft.addressbook.tests;
 
 import org.testng.annotations.Test;
 
-public class ContactDeletion extends TestBase{
+public class ContactDeletionTest extends TestBase{
 
 
   @Test
   public void testContactDeletion() throws Exception {
-    app.getContactHelper().returnToContactPage();
+    app.getContactHelper().goToContactPage();
     app.getContactHelper().contactDeletion();
-    app.getContactHelper().returnToContactPage();
+    app.getContactHelper().goToContactPage();
   }
 
 

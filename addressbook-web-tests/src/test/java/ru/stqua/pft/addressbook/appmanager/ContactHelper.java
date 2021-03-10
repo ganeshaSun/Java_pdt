@@ -1,14 +1,12 @@
 package ru.stqua.pft.addressbook.appmanager;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqua.pft.addressbook.model.ContactData;
 
-import static org.testng.Assert.assertTrue;
+
 
 public class ContactHelper extends HelperBase{
-  private boolean acceptNextAlert = true;
 
   public ContactHelper(FirefoxDriver wd) {
     super(wd);
@@ -18,6 +16,9 @@ public class ContactHelper extends HelperBase{
     click(By.linkText("home page"));
   }
 
+  public void goToContactPage() {
+    click(By.linkText("home"));
+  }
   public void submitContactCreation() {
     click(By.name("submit"));
   }
@@ -44,22 +45,16 @@ public class ContactHelper extends HelperBase{
 
   public void contactDeletion(){
     selectContact();
-    acceptNextAlert = true;
     click(By.xpath("//input[@value='Delete']"));
+    wd.switchTo().alert().accept();
   }
 
-  private String closeAlertAndGetItsText() {
-    try {
-      Alert alert = wd.switchTo().alert();
-      String alertText = alert.getText();
-      if (acceptNextAlert) {
-        alert.accept();
-      } else {
-        alert.dismiss();
-      }
-      return alertText;
-    } finally {
-      acceptNextAlert = true;
-    }
+
+  public void initContactModification() {
+    click(By.xpath("//img[@alt='Edit']"));
+  }
+
+  public void submitContactModification() {
+    click(By.xpath("(//input[@name='update'])[2]"));
   }
 }

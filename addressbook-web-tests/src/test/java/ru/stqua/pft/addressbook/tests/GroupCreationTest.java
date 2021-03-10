@@ -3,7 +3,7 @@ package ru.stqua.pft.addressbook.tests;
 import org.testng.annotations.*;
 import ru.stqua.pft.addressbook.model.GroupData;
 
-public class GroupCreationTests extends TestBase{
+public class GroupCreationTest extends TestBase{
   @Test
   public void testGroupCreation() throws Exception {
     app.getNavigationHelper().goToGroupPage();
