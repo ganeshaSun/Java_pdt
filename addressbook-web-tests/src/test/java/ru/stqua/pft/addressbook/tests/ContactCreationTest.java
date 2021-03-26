@@ -19,7 +19,7 @@ public class ContactCreationTest extends TestBase{
     }
     app.getNavigationHelper().goToContactPage();
     List<ContactData> before = app.getContactHelper().getContactList();
-    ContactData contact = new ContactData("TestName", "TestMiddleName",
+    ContactData contact = new ContactData("TestNameNew", "TestMiddleName",
             "test1","test1", "TestNickname", "Title Test",
             "Bookovsky", "196190 Saint-Petersburg, Moskovsky pr. 163",
             "88123456456", "+78945634", "testaddress@mail.ru");
