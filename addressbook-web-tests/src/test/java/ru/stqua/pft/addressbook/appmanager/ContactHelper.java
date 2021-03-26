@@ -6,11 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqua.pft.addressbook.model.ContactData;
-import ru.stqua.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 public class ContactHelper extends HelperBase{
@@ -42,11 +40,11 @@ public class ContactHelper extends HelperBase{
     type(By.name("mobile"),contactData.getMobile());
     type(By.name("email"),contactData.getEmail());
 
-/*    if (creation){
+    if (creation){
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
     }else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
-    }*/
+    }
   }
 
   public void initContactCreation() {
@@ -61,7 +59,6 @@ public class ContactHelper extends HelperBase{
     selectContact(index);
     click(By.xpath("//input[@value='Delete']"));
     wd.switchTo().alert().accept();
-
   }
 
 
@@ -97,7 +94,7 @@ public class ContactHelper extends HelperBase{
 
     if (rows.size()!=0) {
       for (WebElement row : rows) {
-        String id = row.findElement(By.tagName("td")).getAttribute("value");
+        int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
         List<WebElement> cells = row.findElements(By.tagName("td"));
         String lastname = cells.get(1).getText();
         String name = cells.get(2).getText();

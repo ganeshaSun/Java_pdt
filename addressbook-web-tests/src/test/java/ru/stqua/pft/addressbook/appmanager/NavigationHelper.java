@@ -21,12 +21,11 @@ public class NavigationHelper extends HelperBase {
   click(By.linkText("groups"));
   }
 
-/*  public void returnToContactPage() {
-    click(By.linkText("home page"));
-  }*/
+  public void returnToContactPage() {
+    click(By.linkText("home"));
+  }
 
   public void goToContactPage() {
-
     if (isElementPresent(By.id("maintable"))){
       return;
     }

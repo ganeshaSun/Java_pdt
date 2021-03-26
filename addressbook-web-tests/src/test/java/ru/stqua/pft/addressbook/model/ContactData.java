@@ -3,7 +3,7 @@ package ru.stqua.pft.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-  private final String id;
+  private  int id;
   private final String firstname;
   private final String middlename;
   private final String lastname;
@@ -14,20 +14,7 @@ public class ContactData {
   private final String hometel;
   private final String mobile;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return Objects.equals(id, that.id) &&
-            Objects.equals(firstname, that.firstname) &&
-            Objects.equals(lastname, that.lastname);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, firstname, lastname);
-  }
 
   @Override
   public String toString() {
@@ -41,8 +28,8 @@ public class ContactData {
   private final String email;
   private  String group;
 
-  public ContactData(String lastname, String firstname, String middlename, String group,  String nickname, String title, String company, String address, String hometel, String mobile, String email) {
-    this.id = null;
+  public ContactData(int id, String lastname, String firstname, String middlename, String group,  String nickname, String title, String company, String address, String hometel, String mobile, String email) {
+    this.id = id;
     this.firstname = firstname;
     this.middlename = middlename;
     this.group = group;
@@ -55,7 +42,7 @@ public class ContactData {
     this.mobile = mobile;
     this.email = email;
   }
-  public ContactData(String id, String lastname, String firstname) {
+  public ContactData(int id, String lastname, String firstname) {
     this.id = id;
     this.lastname = lastname;
     this.firstname = firstname;
@@ -70,19 +57,21 @@ public class ContactData {
     this.email = null;
   }
 
-  public ContactData( String lastname, String firstname) {
-    this.id = null;
-    this.lastname = lastname;
+
+
+  public ContactData(String lastname, String firstname, String middlename, String group,  String nickname, String title, String company,
+                     String address, String hometel, String mobile, String email) {
     this.firstname = firstname;
-    this.middlename = null;
-    this.group = null;
-    this.nickname = null;
-    this.title = null;
-    this.company = null;
-    this.address = null;
-    this.hometel = null;
-    this.mobile = null;
-    this.email = null;
+    this.middlename = middlename;
+    this.group = group;
+    this.lastname = lastname;
+    this.nickname = nickname;
+    this.title = title;
+    this.company = company;
+    this.address = address;
+    this.hometel = hometel;
+    this.mobile = mobile;
+    this.email = email;
   }
 
   public String getFirstname() {
@@ -127,5 +116,27 @@ public class ContactData {
 
   public String getGroup() {
     return group;
+  }
+
+  public int getId() {
+    return id;
+  }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id &&
+            Objects.equals(firstname, that.firstname) &&
+            Objects.equals(lastname, that.lastname);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstname, lastname);
+  }
+
+  public void setId(int max) {
+    this.id = max;
   }
 }
