@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.concurrent.TimeUnit;
+
 public class NavigationHelper extends HelperBase {
 
   public NavigationHelper(WebDriver wd) {
@@ -19,11 +21,12 @@ public class NavigationHelper extends HelperBase {
   click(By.linkText("groups"));
   }
 
-  public void returnToContactPage() {
+/*  public void returnToContactPage() {
     click(By.linkText("home page"));
-  }
+  }*/
 
   public void goToContactPage() {
+
     if (isElementPresent(By.id("maintable"))){
       return;
     }

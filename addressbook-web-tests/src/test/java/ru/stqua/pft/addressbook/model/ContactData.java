@@ -1,6 +1,9 @@
 package ru.stqua.pft.addressbook.model;
 
+import java.util.Objects;
+
 public class ContactData {
+  private final String id;
   private final String firstname;
   private final String middlename;
   private final String lastname;
@@ -10,10 +13,36 @@ public class ContactData {
   private final String address;
   private final String hometel;
   private final String mobile;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return Objects.equals(id, that.id) &&
+            Objects.equals(firstname, that.firstname) &&
+            Objects.equals(lastname, that.lastname);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstname, lastname);
+  }
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id='" + id + '\'' +
+            ", firstname='" + firstname + '\'' +
+            ", lastname='" + lastname + '\'' +
+            '}';
+  }
+
   private final String email;
   private  String group;
 
-  public ContactData(String firstname, String middlename, String group, String lastname, String nickname, String title, String company, String address, String hometel, String mobile, String email) {
+  public ContactData(String lastname, String firstname, String middlename, String group,  String nickname, String title, String company, String address, String hometel, String mobile, String email) {
+    this.id = null;
     this.firstname = firstname;
     this.middlename = middlename;
     this.group = group;
@@ -25,6 +54,35 @@ public class ContactData {
     this.hometel = hometel;
     this.mobile = mobile;
     this.email = email;
+  }
+  public ContactData(String id, String lastname, String firstname) {
+    this.id = id;
+    this.lastname = lastname;
+    this.firstname = firstname;
+    this.middlename = null;
+    this.group = null;
+    this.nickname = null;
+    this.title = null;
+    this.company = null;
+    this.address = null;
+    this.hometel = null;
+    this.mobile = null;
+    this.email = null;
+  }
+
+  public ContactData( String lastname, String firstname) {
+    this.id = null;
+    this.lastname = lastname;
+    this.firstname = firstname;
+    this.middlename = null;
+    this.group = null;
+    this.nickname = null;
+    this.title = null;
+    this.company = null;
+    this.address = null;
+    this.hometel = null;
+    this.mobile = null;
+    this.email = null;
   }
 
   public String getFirstname() {
