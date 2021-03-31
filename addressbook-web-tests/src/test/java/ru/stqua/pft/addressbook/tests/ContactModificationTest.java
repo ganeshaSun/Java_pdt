@@ -8,15 +8,16 @@ import ru.stqua.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class ContactModificationTest extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions(){
     app.goTo().contactPage();
-    if (app.contact().list().size()==0) {
+    if (app.contact().all().size()==0) {
       app.goTo().groupPage();
-      if (app.group().list().size()==0){
+      if (app.group().all().size()==0){
         app.group().create(new GroupData().withName("test 1").withHeader("head").withFooter("footer"));
       }
       app.goTo().contactPage();
@@ -28,17 +29,14 @@ public class ContactModificationTest extends TestBase {
 
   @Test
   public void testContactModification() throws Exception {
-    List<ContactData> before = app.contact().list();
-    ContactData contact = new ContactData().withId(before.get(0).getId()).withFirstName("ModifiedContact").withLastname("LLastName");
+    Set<ContactData> before = app.contact().all();
+    ContactData modifiedContact = before.iterator().next();
+    ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstName("ModifiedContact").withLastname("LLastName");
 
     app.contact().modify(contact);
-    List<ContactData> after = app.contact().list();
-    before.remove(0);
+    Set<ContactData> after = app.contact().all();
+    before.remove(modifiedContact);
     before.add(contact);
-
-    Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(after, before);
   }
 
