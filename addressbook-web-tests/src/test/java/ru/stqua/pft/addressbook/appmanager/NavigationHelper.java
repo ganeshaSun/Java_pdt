@@ -2,9 +2,6 @@ package ru.stqua.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
-import java.util.concurrent.TimeUnit;
 
 public class NavigationHelper extends HelperBase {
 
@@ -12,21 +9,21 @@ public class NavigationHelper extends HelperBase {
     super(wd);
   }
 
-  public void goToGroupPage() {
-    if (! isElementPresent(By.tagName("h1"))
+  public void groupPage() {
+    if (!isElementPresent(By.tagName("h1"))
             && wd.findElement(By.tagName("h1")).getText().equals("Group")
-      && isElementPresent(By.name("new"))){
-    return;
+            && isElementPresent(By.name("new"))) {
+      return;
     }
-  click(By.linkText("groups"));
+    click(By.linkText("groups"));
   }
 
   public void returnToContactPage() {
     click(By.linkText("home"));
   }
 
-  public void goToContactPage() {
-    if (isElementPresent(By.id("maintable"))){
+  public void contactPage() {
+    if (isElementPresent(By.id("maintable"))) {
       return;
     }
     click(By.linkText("home"));

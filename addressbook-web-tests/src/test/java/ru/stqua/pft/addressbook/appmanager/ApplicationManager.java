@@ -13,9 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationManager {
 
   WebDriver wd;
-  private  NavigationHelper navigationHelper;
-  private  ContactHelper contactHelper;
-  private  GroupHelper groupHelper;
+  private NavigationHelper navigationHelper;
+  private ContactHelper contactHelper;
+  private GroupHelper groupHelper;
   private SessionHelper sessionHelper;
   private String browser;
 
@@ -24,14 +24,11 @@ public class ApplicationManager {
   }
 
   public void init() {
-    if (browser.equals(BrowserType.FIREFOX)){
+    if (browser.equals(BrowserType.FIREFOX)) {
       wd = new FirefoxDriver();
-    }
-    else if (browser.equals(BrowserType.CHROME)){
+    } else if (browser.equals(BrowserType.CHROME)) {
       wd = new ChromeDriver();
-    }
-    else if (browser.equals(BrowserType.IE))
-    {
+    } else if (browser.equals(BrowserType.IE)) {
       wd = new InternetExplorerDriver();
     }
 
@@ -44,8 +41,6 @@ public class ApplicationManager {
     sessionHelper.login("admin", "secret");
   }
 
-
-
   public void stop() {
     wd.findElement(By.linkText("Logout")).click();
     wd.quit();
@@ -54,22 +49,22 @@ public class ApplicationManager {
 
   private boolean isElementPresent(By by) {
     try {
-     wd.findElement(by);
+      wd.findElement(by);
       return true;
     } catch (NoSuchElementException e) {
       return false;
     }
   }
 
-  public GroupHelper getGroupHelper() {
+  public GroupHelper group() {
     return groupHelper;
   }
 
-  public ContactHelper getContactHelper() {
+  public ContactHelper contact() {
     return contactHelper;
   }
 
-  public NavigationHelper getNavigationHelper() {
+  public NavigationHelper goTo() {
     return navigationHelper;
   }
 
