@@ -73,7 +73,8 @@ public class ContactHelper extends HelperBase {
     wd.switchTo().alert().accept();
   }
 
-  public void initContactModification() {
+  public void initContactModification(ContactData contact) {
+    selectContactById(contact.getId());
     click(By.xpath("//img[@alt='Edit']"));
   }
 
@@ -89,7 +90,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void modify(ContactData contact) {
-    initContactModification();
+    initContactModification(contact);
     fillContactForm(contact, false);
     submitContactModification();
     returnToContactPage();
