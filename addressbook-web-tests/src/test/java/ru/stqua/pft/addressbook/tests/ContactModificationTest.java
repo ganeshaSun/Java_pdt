@@ -37,7 +37,7 @@ public class ContactModificationTest extends TestBase {
   public void testContactModification() throws Exception {
     Contacts before = app.contact().all();
     ContactData modifiedContact = before.iterator().next();
-    ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstName("ModifiedContact").withLastname("LLastName");
+    ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstName("ModifiedContact!!!!!!!1").withLastname("LLastName");
     app.contact().modify(contact);
 
     assertThat(app.contact().count(),equalTo(before.size()));

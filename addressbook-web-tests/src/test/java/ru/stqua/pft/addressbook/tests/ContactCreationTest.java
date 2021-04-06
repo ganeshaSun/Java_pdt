@@ -26,7 +26,7 @@ public class ContactCreationTest extends TestBase {
   public void testContactCreation() throws Exception {
 
     Contacts before = app.contact().all();
-    File photo = new File("\\src\\test\\resources\\28.png");
+    File photo = new File("src\\test\\resources\\29.png");
     ContactData contact = new ContactData().withFirstName("TestName").withMiddlename("TestMiddleName")
             .withLastname("Last").withAddress("196190 Saint-Petersburg, Moskovsky pr. 163").withCompany("Bookovsky")
             .withHomePhone("88123456456").withMobilePhone("+78945634").withEmail("testaddress@mail.ru").withWorkPhone("123123")

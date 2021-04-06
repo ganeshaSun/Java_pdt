@@ -52,15 +52,15 @@ public class GroupData {
   public int getId() {
     return id;
   }
-  public String name() {
+  public String getName() {
     return name;
   }
 
-  public String header() {
+  public String getHeader() {
     return header;
   }
 
-  public String footer() {
+  public String getFooter() {
     return footer;
   }
 
