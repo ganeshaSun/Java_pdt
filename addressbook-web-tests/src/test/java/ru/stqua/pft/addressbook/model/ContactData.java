@@ -12,6 +12,9 @@ public class ContactData {
   private int id;
   private String firstname;
   private String middlename;
+
+
+
   private String lastname;
   private String nickname;
   private String title;
@@ -118,15 +121,6 @@ public class ContactData {
     return this;
   }
 
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "id='" + id + '\'' +
-            ", firstname='" + firstname + '\'' +
-            ", lastname='" + lastname + '\'' +
-            '}';
-  }
-
   public String getFirstname() {
     return firstname;
   }
@@ -217,5 +211,19 @@ public class ContactData {
     this.allEmails = allEmails;
     return this;
 
+  }
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "firstname='" + firstname + '\'' +
+            ", lastname='" + lastname + '\'' +
+            ", company='" + company + '\'' +
+            ", address='" + address + '\'' +
+            ", hometel='" + hometel + '\'' +
+            ", mobile='" + mobile + '\'' +
+            ", photo=" + photo +
+            ", work='" + work + '\'' +
+            ", email='" + email + '\'' +
+            '}';
   }
 }
