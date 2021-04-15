@@ -2,50 +2,79 @@ package ru.stqua.pft.addressbook.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
 @XStreamAlias("group")
+@Entity
+@Table(name="addressbook")
 public class ContactData {
+
   @XStreamOmitField
+  @Id
+  @Column (name = "id")
   private int id;
+
+  @Column (name = "firstname")
   private String firstname;
+
+  @Column (name = "middlename")
   private String middlename;
 
-
-
+  @Column (name = "lastname")
   private String lastname;
+
+  @Column (name = "nickname")
   private String nickname;
+
+  @Column (name = "title")
   private String title;
+
+  @Column (name = "company")
   private String company;
+
+  @Column (name = "address")
+  @Type(type = "text")
   private String address;
+
+  @Column (name = "home")
+  @Type(type = "text")
   private String hometel;
+
+  @Column (name = "mobile")
+  @Type(type = "text")
   private String mobile;
-  private String allPhones;
-  private String allEmails;
-  private File photo;
+
+  @Column (name = "work")
+  @Type(type = "text")
   private String work;
-  private String email;
-  private String email2;
-  private String email3;
+
+  @Transient
+  private String allPhones;
+  @Transient
+  private String allEmails;
+  @Transient
   private String group;
 
+  @Column (name = "photo")
+  @Type(type = "text")
+  private String photo;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return id == that.id &&
-            Objects.equals(firstname, that.firstname) &&
-            Objects.equals(lastname, that.lastname);
-  }
+  @Column (name = "email")
+  @Type(type = "text")
+  private String email;
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, firstname, lastname);
-  }
+  @Column (name = "email2")
+  @Type(type = "text")
+  private String email2;
+
+  @Column (name = "email3")
+  @Type(type = "text")
+  private String email3;
+
 
   public ContactData withId (int id) {
     this.id = id;
@@ -182,11 +211,11 @@ public class ContactData {
   }
 
   public File getPhoto() {
-    return photo;
+    return new File(photo);
   }
 
   public ContactData withPhoto(File photo) {
-    this.photo = photo;
+    this.photo = photo.getPath();
     return this;
   }
 
@@ -215,15 +244,50 @@ public class ContactData {
   @Override
   public String toString() {
     return "ContactData{" +
-            "firstname='" + firstname + '\'' +
+            "id=" + id +
+            ", firstname='" + firstname + '\'' +
+            ", middlename='" + middlename + '\'' +
             ", lastname='" + lastname + '\'' +
+            ", nickname='" + nickname + '\'' +
+            ", title='" + title + '\'' +
             ", company='" + company + '\'' +
             ", address='" + address + '\'' +
             ", hometel='" + hometel + '\'' +
             ", mobile='" + mobile + '\'' +
-            ", photo=" + photo +
             ", work='" + work + '\'' +
+            ", allPhones='" + allPhones + '\'' +
+            ", allEmails='" + allEmails + '\'' +
+            ", group='" + group + '\'' +
+            ", photo='" + photo + '\'' +
             ", email='" + email + '\'' +
+            ", email2='" + email2 + '\'' +
+            ", email3='" + email3 + '\'' +
             '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id &&
+            Objects.equals(firstname, that.firstname) &&
+            Objects.equals(middlename, that.middlename) &&
+            Objects.equals(lastname, that.lastname) &&
+            Objects.equals(nickname, that.nickname) &&
+            Objects.equals(title, that.title) &&
+            Objects.equals(company, that.company) &&
+            Objects.equals(address, that.address) &&
+            Objects.equals(hometel, that.hometel) &&
+            Objects.equals(mobile, that.mobile) &&
+            Objects.equals(work, that.work) &&
+            Objects.equals(email, that.email) &&
+            Objects.equals(email2, that.email2) &&
+            Objects.equals(email3, that.email3);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstname, middlename, lastname, nickname, title, company, address, hometel, mobile, work, email, email2, email3);
   }
 }

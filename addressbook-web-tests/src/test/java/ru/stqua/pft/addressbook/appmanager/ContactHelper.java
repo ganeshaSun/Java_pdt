@@ -8,6 +8,7 @@ import org.testng.Assert;
 import ru.stqua.pft.addressbook.model.ContactData;
 import ru.stqua.pft.addressbook.model.Contacts;
 
+import java.io.File;
 import java.util.List;
 
 

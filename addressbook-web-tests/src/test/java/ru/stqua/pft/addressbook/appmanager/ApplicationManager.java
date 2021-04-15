@@ -23,14 +23,15 @@ public class ApplicationManager {
   private SessionHelper sessionHelper;
   private String browser;
   private Properties properties;
+  private DbHelper dbHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
-
   }
 
   public void init() throws IOException {
     String target = System.getProperty("target","local");
+    dbHelper = new DbHelper();
     properties = new Properties();
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
     if (browser.equals(BrowserType.FIREFOX)) {
@@ -80,4 +81,6 @@ public class ApplicationManager {
   public SessionHelper getSessionHelper() {
     return sessionHelper;
   }
+
+  public DbHelper  db(){    return dbHelper;  }
 }

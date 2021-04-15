@@ -16,9 +16,9 @@ public class ContactEmailTest extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() {
     app.goTo().contactPage();
-    if (app.contact().all().size() == 0) {
+    if (app.db().contacts().size() == 0) {
       app.goTo().groupPage();
-      if (app.group().all().size() == 0) {
+      if (app.db().groups().size() == 0) {
         app.group().create(new GroupData().withName("test 1").withHeader("head").withFooter("footer"));
       }
       app.goTo().contactPage();
@@ -34,7 +34,7 @@ public class ContactEmailTest extends TestBase {
     app.goTo().homePage();
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
-  assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
+    assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
   }
 
 
