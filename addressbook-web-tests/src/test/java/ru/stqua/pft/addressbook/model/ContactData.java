@@ -211,7 +211,12 @@ public class ContactData {
   }
 
   public File getPhoto() {
-    return new File(photo);
+    if (photo != null){
+      return new File(photo);
+    }
+    else {
+      return null;
+    }
   }
 
   public ContactData withPhoto(File photo) {
@@ -281,6 +286,7 @@ public class ContactData {
             Objects.equals(hometel, that.hometel) &&
             Objects.equals(mobile, that.mobile) &&
             Objects.equals(work, that.work) &&
+            Objects.equals(group, that.group) &&
             Objects.equals(email, that.email) &&
             Objects.equals(email2, that.email2) &&
             Objects.equals(email3, that.email3);
@@ -288,6 +294,6 @@ public class ContactData {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, middlename, lastname, nickname, title, company, address, hometel, mobile, work, email, email2, email3);
+    return Objects.hash(id, firstname, middlename, lastname, nickname, title, company, address, hometel, mobile, work, group, email, email2, email3);
   }
 }

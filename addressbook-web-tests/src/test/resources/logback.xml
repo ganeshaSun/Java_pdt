@@ -24,7 +24,5 @@
         <appender-ref ref="STDOUT" />
     </root>
 
-    <root level="error">
-        <appender-ref ref="STDOUT" />
-    </root>
+
 </configuration>
