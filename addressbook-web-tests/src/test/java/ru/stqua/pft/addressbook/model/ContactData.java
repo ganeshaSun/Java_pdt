@@ -287,6 +287,7 @@ public class ContactData {
             Objects.equals(mobile, that.mobile) &&
             Objects.equals(work, that.work) &&
             Objects.equals(group, that.group) &&
+            Objects.equals(photo, that.photo) &&
             Objects.equals(email, that.email) &&
             Objects.equals(email2, that.email2) &&
             Objects.equals(email3, that.email3);
@@ -294,6 +295,6 @@ public class ContactData {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, middlename, lastname, nickname, title, company, address, hometel, mobile, work, group, email, email2, email3);
+    return Objects.hash(id, firstname, middlename, lastname, nickname, title, company, address, hometel, mobile, work, group, photo, email, email2, email3);
   }
 }
