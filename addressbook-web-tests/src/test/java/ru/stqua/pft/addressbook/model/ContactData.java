@@ -28,10 +28,10 @@ public class ContactData {
   private String lastname;
 
   @Column (name = "nickname")
-  private String nickname = null;
+  private String nickname = " ";
 
   @Column (name = "title")
-  private String title = null;
+  private String title = " ";
 
   @Column (name = "company")
   private String company;
@@ -69,11 +69,11 @@ public class ContactData {
 
   @Column (name = "email2")
   @Type(type = "text")
-  private String email2 = null;
+  private String email2 = "";
 
   @Column (name = "email3")
   @Type(type = "text")
-  private String email3 = null;
+  private String email3 = "";
 
 
   public ContactData withId (int id) {
