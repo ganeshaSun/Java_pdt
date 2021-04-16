@@ -5,10 +5,8 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.XStream;
 import ru.stqua.pft.addressbook.model.ContactData;
-import ru.stqua.pft.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -63,9 +61,10 @@ public class ContactDataGenerator {
   private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
     try (Writer writer = new FileWriter(file)) {
       for (ContactData contact : contacts) {
-        writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n", contact.getFirstname(), contact.getMiddlename(),
+        writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s,%s;\n", contact.getFirstname(), contact.getMiddlename(),
                 contact.getLastname(), contact.getAddress(), contact.getCompany(), contact.getHomePhone(),
-                contact.getMobilePhone(), contact.getEmail(), contact.getWorkPhone(), contact.getPhoto()));
+                contact.getMobilePhone(), contact.getEmail(), contact.getWorkPhone(),
+                contact.getNickname(),contact.getTitle(), contact.getPhoto(),contact.getEmail2(), contact.getEmail3()));
       }
     }
   }
@@ -74,7 +73,7 @@ public class ContactDataGenerator {
     XStream xStream = new XStream();
     xStream.processAnnotations(ContactData.class);
     String xml = xStream.toXML(contacts);
-    try(Writer writer = new FileWriter(file)){
+    try (Writer writer = new FileWriter(file)) {
       writer.write(xml);
     }
   }
@@ -86,7 +85,7 @@ public class ContactDataGenerator {
       contacts.add(new ContactData().withFirstName("TestName " + i).withMiddlename("TestMiddleName " + i)
               .withLastname("Last " + i).withAddress(i + " 196190 Saint-Petersburg, Moskovsky pr. 163").withCompany(i + " Bookovsky")
               .withHomePhone(i + " 88123456456").withMobilePhone("+78945634" + i).withEmail(i + "testaddress@mail.ru")
-              .withWorkPhone(i + "123123").withPhoto(photo));
+              .withWorkPhone(i + "123123"));
     }
     return contacts;
   }

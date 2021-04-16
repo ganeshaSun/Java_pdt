@@ -28,10 +28,10 @@ public class ContactData {
   private String lastname;
 
   @Column (name = "nickname")
-  private String nickname;
+  private String nickname = null;
 
   @Column (name = "title")
-  private String title;
+  private String title = null;
 
   @Column (name = "company")
   private String company;
@@ -69,11 +69,11 @@ public class ContactData {
 
   @Column (name = "email2")
   @Type(type = "text")
-  private String email2;
+  private String email2 = null;
 
   @Column (name = "email3")
   @Type(type = "text")
-  private String email3;
+  private String email3 = null;
 
 
   public ContactData withId (int id) {
@@ -210,6 +210,33 @@ public class ContactData {
     return email3;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id &&
+            Objects.equals(firstname, that.firstname) &&
+            Objects.equals(middlename, that.middlename) &&
+            Objects.equals(lastname, that.lastname) &&
+            Objects.equals(nickname, that.nickname) &&
+            Objects.equals(title, that.title) &&
+            Objects.equals(company, that.company) &&
+            Objects.equals(address, that.address) &&
+            Objects.equals(hometel, that.hometel) &&
+            Objects.equals(mobile, that.mobile) &&
+            Objects.equals(work, that.work) &&
+            Objects.equals(group, that.group) &&
+            Objects.equals(email, that.email) &&
+            Objects.equals(email2, that.email2) &&
+            Objects.equals(email3, that.email3);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstname, middlename, lastname, nickname, title, company, address, hometel, mobile, work, group, email, email2, email3);
+  }
+
   public File getPhoto() {
     if (photo != null){
       return new File(photo);
@@ -270,31 +297,4 @@ public class ContactData {
             '}';
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return id == that.id &&
-            Objects.equals(firstname, that.firstname) &&
-            Objects.equals(middlename, that.middlename) &&
-            Objects.equals(lastname, that.lastname) &&
-            Objects.equals(nickname, that.nickname) &&
-            Objects.equals(title, that.title) &&
-            Objects.equals(company, that.company) &&
-            Objects.equals(address, that.address) &&
-            Objects.equals(hometel, that.hometel) &&
-            Objects.equals(mobile, that.mobile) &&
-            Objects.equals(work, that.work) &&
-            Objects.equals(group, that.group) &&
-            Objects.equals(photo, that.photo) &&
-            Objects.equals(email, that.email) &&
-            Objects.equals(email2, that.email2) &&
-            Objects.equals(email3, that.email3);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, firstname, middlename, lastname, nickname, title, company, address, hometel, mobile, work, group, photo, email, email2, email3);
-  }
 }

@@ -8,40 +8,7 @@
     "address": "0 196190 Saint-Petersburg, Moskovsky pr. 163",
     "hometel": "0 88123456456",
     "mobile": "+789456340",
-    "photo": {
-      "path": "src\\test\\resources\\29.png"
-    },
     "work": "0123123",
     "email": "0testaddress@mail.ru"
-  },
-  {
-    "id": 0,
-    "firstname": "TestName 1",
-    "middlename": "TestMiddleName 1",
-    "lastname": "Last 1",
-    "company": "1 Bookovsky",
-    "address": "1 196190 Saint-Petersburg, Moskovsky pr. 163",
-    "hometel": "1 88123456456",
-    "mobile": "+789456341",
-    "photo": {
-      "path": "src\\test\\resources\\29.png"
-    },
-    "work": "1123123",
-    "email": "1testaddress@mail.ru"
-  },
-  {
-    "id": 0,
-    "firstname": "TestName 2",
-    "middlename": "TestMiddleName 2",
-    "lastname": "Last 2",
-    "company": "2 Bookovsky",
-    "address": "2 196190 Saint-Petersburg, Moskovsky pr. 163",
-    "hometel": "2 88123456456",
-    "mobile": "+789456342",
-    "photo": {
-      "path": "src\\test\\resources\\29.png"
-    },
-    "work": "2123123",
-    "email": "2testaddress@mail.ru"
   }
 ]
