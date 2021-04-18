@@ -6,7 +6,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("group")
 @Entity
@@ -56,8 +58,6 @@ public class ContactData {
   private String allPhones;
   @Transient
   private String allEmails;
-  @Transient
-  private String group;
 
   @Column (name = "photo")
   @Type(type = "text")
@@ -74,6 +74,11 @@ public class ContactData {
   @Column (name = "email3")
   @Type(type = "text")
   private String email3 = "";
+
+  @ManyToMany
+  @JoinTable(name = "address_in_groups",
+          joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups= new HashSet<GroupData>();
 
 
   public ContactData withId (int id) {
@@ -131,11 +136,6 @@ public class ContactData {
   }
 
 
-  public ContactData withGroup(String group) {
-    this.group = group;
-    return this;
-  }
-
   public ContactData withEmail(String email) {
     this.email = email;
     return this;
@@ -186,10 +186,6 @@ public class ContactData {
     return mobile;
   }
 
-  public String getGroup() {
-    return group;
-  }
-
   public int getId() {
     return id;
   }
@@ -210,6 +206,8 @@ public class ContactData {
     return email3;
   }
 
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -226,7 +224,6 @@ public class ContactData {
             Objects.equals(hometel, that.hometel) &&
             Objects.equals(mobile, that.mobile) &&
             Objects.equals(work, that.work) &&
-            Objects.equals(group, that.group) &&
             Objects.equals(email, that.email) &&
             Objects.equals(email2, that.email2) &&
             Objects.equals(email3, that.email3);
@@ -234,7 +231,7 @@ public class ContactData {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, middlename, lastname, nickname, title, company, address, hometel, mobile, work, group, email, email2, email3);
+    return Objects.hash(id, firstname, middlename, lastname, nickname, title, company, address, hometel, mobile, work, email, email2, email3);
   }
 
   public File getPhoto() {
@@ -273,6 +270,11 @@ public class ContactData {
     return this;
 
   }
+
+  public Groups getGroups() {
+    return new Groups(groups);
+  }
+
   @Override
   public String toString() {
     return "ContactData{" +
@@ -289,7 +291,6 @@ public class ContactData {
             ", work='" + work + '\'' +
             ", allPhones='" + allPhones + '\'' +
             ", allEmails='" + allEmails + '\'' +
-            ", group='" + group + '\'' +
             ", photo='" + photo + '\'' +
             ", email='" + email + '\'' +
             ", email2='" + email2 + '\'' +

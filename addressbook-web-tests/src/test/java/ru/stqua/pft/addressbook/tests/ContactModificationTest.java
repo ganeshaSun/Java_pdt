@@ -1,19 +1,12 @@
 package ru.stqua.pft.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqua.pft.addressbook.model.ContactData;
 import ru.stqua.pft.addressbook.model.Contacts;
 import ru.stqua.pft.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactModificationTest extends TestBase {
@@ -41,13 +34,14 @@ public class ContactModificationTest extends TestBase {
             .withFirstName("ModifiedContact!!!!!!!1").withLastname("LLastName").withNickname(modifiedContact.getNickname()).withMiddlename(modifiedContact.getMiddlename())
             .withHomePhone(modifiedContact.getHomePhone()).withWorkPhone(modifiedContact.getWorkPhone()).withMobilePhone(modifiedContact.getMobilePhone())
             .withEmail(modifiedContact.getEmail()).withEmail2(modifiedContact.getEmail2()).withEmail3(modifiedContact.getEmail3())
-            .withAddress(modifiedContact.getAddress()).withCompany(modifiedContact.getCompany()).withGroup(modifiedContact.getGroup())
+            .withAddress(modifiedContact.getAddress()).withCompany(modifiedContact.getCompany())
             .withTitle(modifiedContact.getTitle());
     app.contact().modify(contact);
 
     assertThat(app.contact().count(),equalTo(before.size()));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+    verifyContactListInUI();
   }
 
 

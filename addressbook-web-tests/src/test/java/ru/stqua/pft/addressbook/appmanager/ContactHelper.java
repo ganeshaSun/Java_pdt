@@ -151,4 +151,12 @@ public class ContactHelper extends HelperBase {
             .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work)
             .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
   }
+
+  public void addGroup(ContactData contact) {
+    selectContactById(contact.getId());
+    new Select(wd.findElement(By.name("to_group"))).selectByIndex(1);
+    click(By.name("add"));
+
+    }
+
 }
