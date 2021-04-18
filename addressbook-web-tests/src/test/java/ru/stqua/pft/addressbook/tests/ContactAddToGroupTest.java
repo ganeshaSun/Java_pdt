@@ -22,6 +22,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactAddToGroupTest extends TestBase {
 
   private SessionFactory sessionFactory;
+  private List<GroupData> groupForAdding;
+  private ContactData contactAddToGroup;
 
   @BeforeClass
   protected void setUpSession() throws Exception {
@@ -39,58 +41,48 @@ public class ContactAddToGroupTest extends TestBase {
     }
   }
 
-/*
-  public ContactData ensurePreconditions() {
+  @BeforeMethod
+  public void ensurePreconditions() {
     boolean needToCreateGroup = true;
-    ContactData contactAddGroup = null;
+
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     List<ContactData> contactList = session.createQuery("from ContactData").list();
-    List<GroupData> groupsList = session.createQuery("from GroupData").list();
+    List<GroupData> allGroupsList = session.createQuery("from GroupData").list();
     for (ContactData contact : contactList) {
-      if (contact.getGroups().size() != groupsList.size()) {
+      if (contact.getGroups().size() != allGroupsList.size()) {
         needToCreateGroup = false;
-        contactAddGroup = contact;
-        break;
+        contactAddToGroup = contact;
+        for (GroupData group : allGroupsList) {
+          for (GroupData g : contact.getGroups()) {
+            if (group.getId() != g.getId()) {
+              groupForAdding.add(group);
+            }
+          }
+          break;
+        }
       }
+      if (needToCreateGroup == true) {
+        app.goTo().groupPage();
+        GroupData newGroup = new GroupData().withName("newGroup").withHeader("newGroupHeader");
+        app.group().create(newGroup);
+        app.goTo().contactPage();
+        Contacts c = app.db().contacts();
+        contactAddToGroup = c.iterator().next();
+        groupForAdding.add(newGroup);
+      }
+      session.getTransaction().commit();
+      session.close();
     }
-    if (needToCreateGroup == true) {
-      app.goTo().groupPage();
-      app.group().create(new GroupData().withName("newGroup").withHeader("newGroupHeader"));
-      app.goTo().contactPage();
-      Contacts c = app.db().contacts();
-      contactAddGroup = c.iterator().next();
-    }
-    session.getTransaction().commit();
-    session.close();
-    return contactAddGroup;
-  }*/
+  }
 
   @Test
   public void testContactAddToGroup() {
-    boolean needToCreateGroup = true;
-    ContactData contactAddGroup = null;
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    List<ContactData> contactList = session.createQuery("from ContactData").list();
-    List<GroupData> groupsList = session.createQuery("from GroupData").list();
-    for (ContactData contact : contactList) {
-      if (contact.getGroups().size() != groupsList.size()) {
-        needToCreateGroup = false;
-        contactAddGroup = contact;
-        break;
-      }
-    }
-    if (needToCreateGroup == true) {
-      app.goTo().groupPage();
-      app.group().create(new GroupData().withName("newGroup").withHeader("newGroupHeader"));
-      app.goTo().contactPage();
-      Contacts c = app.db().contacts();
-      contactAddGroup = c.iterator().next();
-    }
 
     ContactData beforeContact = (ContactData) session.createQuery("from ContactData where id=" +
-            contactAddGroup.getId()).getSingleResult();
+            contactAddToGroup.getId()).getSingleResult();
     Groups beforeGroups = beforeContact.getGroups();
     System.out.println("Before " + beforeContact);
     System.out.println("groups linked before" + beforeContact.getGroups());
@@ -98,13 +90,13 @@ public class ContactAddToGroupTest extends TestBase {
     session.close();
 
     app.goTo().contactPage();
-    app.contact().addGroup(contactAddGroup,beforeGroups);
+    app.contact().addGroup(contactAddToGroup, groupForAdding);
 
     session = sessionFactory.openSession();
     session.beginTransaction();
     ContactData afterContact = (ContactData) session.createQuery("from ContactData where id=" +
-            contactAddGroup.getId()).getSingleResult();
-    Groups afterGroups = beforeContact.getGroups();
+            contactAddToGroup.getId()).getSingleResult();
+    Groups afterGroups = afterContact.getGroups();
     System.out.println("After " + afterContact);
     System.out.println("groups linked after" + afterContact.getGroups());
     session.getTransaction().commit();

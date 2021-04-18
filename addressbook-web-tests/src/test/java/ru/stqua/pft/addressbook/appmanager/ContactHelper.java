@@ -10,6 +10,7 @@ import ru.stqua.pft.addressbook.model.Contacts;
 import ru.stqua.pft.addressbook.model.GroupData;
 import ru.stqua.pft.addressbook.model.Groups;
 
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -153,21 +154,14 @@ public class ContactHelper extends HelperBase {
             .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
   }
 
-  public void addGroup(ContactData contact, Groups groupsLinkedToContact) {
+  public void addGroup(ContactData contact, List<GroupData> groupListforAdding) {
     selectContactById(contact.getId());
-   // List<WebElement> elements = wd.findElements(By.cssSelector("select[name='to_group']"));
-    WebElement element = wd.findElement(By.name("to_group"));
-    String [] groups_to = element.getText().split("\n");
-    for (GroupData group : groupsLinkedToContact) {
-      for (String g : groups_to) {
-        int id = Integer.parseInt(element.findElement(By.tagName("option")).getAttribute("value"));
-        if (g != group.getName()) {
-          wd.findElement(By.cssSelector("option[value='" + id + "']")).click();
-        }
-      }
-      click(By.name("add"));
+    GroupData groupToAdd = groupListforAdding.iterator().next();
+    wd.findElement(By.cssSelector("option[value='" + groupToAdd.getId() + "']")).click();
 
-    }
   }
 
+  public void removeGroup(ContactData contact) {
+
+  }
 }
