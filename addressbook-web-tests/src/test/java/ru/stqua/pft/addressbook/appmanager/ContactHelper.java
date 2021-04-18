@@ -155,16 +155,18 @@ public class ContactHelper extends HelperBase {
 
   public void addGroup(ContactData contact, Groups groupsLinkedToContact) {
     selectContactById(contact.getId());
-    List<WebElement> elements = wd.findElements(By.cssSelector("select[name='to_group']"));
+   // List<WebElement> elements = wd.findElements(By.cssSelector("select[name='to_group']"));
+    WebElement element = wd.findElement(By.name("to_group"));
+    String [] groups_to = element.getText().split("\n");
     for (GroupData group : groupsLinkedToContact) {
-      for (WebElement element : elements) {
-        String name = element.getText();
+      for (String g : groups_to) {
         int id = Integer.parseInt(element.findElement(By.tagName("option")).getAttribute("value"));
-        if (name != group.getName()) {
+        if (g != group.getName()) {
           wd.findElement(By.cssSelector("option[value='" + id + "']")).click();
         }
       }
       click(By.name("add"));
+
     }
   }
 
