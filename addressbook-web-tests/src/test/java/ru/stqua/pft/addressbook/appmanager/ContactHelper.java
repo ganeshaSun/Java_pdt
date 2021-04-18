@@ -7,8 +7,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqua.pft.addressbook.model.ContactData;
 import ru.stqua.pft.addressbook.model.Contacts;
+import ru.stqua.pft.addressbook.model.GroupData;
+import ru.stqua.pft.addressbook.model.Groups;
 
-import java.io.File;
 import java.util.List;
 
 
@@ -79,7 +80,7 @@ public class ContactHelper extends HelperBase {
   public void initContactModification(ContactData contact) {
  /*   selectContactById(contact.getId());
     click(By.xpath("//img[@alt='Edit']"));*/
-    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']",contact.getId()))).click();
+    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", contact.getId()))).click();
 
   }
 
@@ -131,8 +132,8 @@ public class ContactHelper extends HelperBase {
     return new Contacts(contactCash);
   }
 
-  public int count(){
-    return (wd.findElements(By.tagName("tr")).size()-1);
+  public int count() {
+    return (wd.findElements(By.tagName("tr")).size() - 1);
   }
 
   public ContactData infoFromEditForm(ContactData contact) {
@@ -152,11 +153,19 @@ public class ContactHelper extends HelperBase {
             .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
   }
 
-  public void addGroup(ContactData contact) {
+  public void addGroup(ContactData contact, Groups groupsLinkedToContact) {
     selectContactById(contact.getId());
-    new Select(wd.findElement(By.name("to_group"))).selectByIndex(1);
-    click(By.name("add"));
-
+    List<WebElement> elements = wd.findElements(By.cssSelector("select[name='to_group']"));
+    for (GroupData group : groupsLinkedToContact) {
+      for (WebElement element : elements) {
+        String name = element.getText();
+        int id = Integer.parseInt(element.findElement(By.tagName("option")).getAttribute("value"));
+        if (name != group.getName()) {
+          wd.findElement(By.cssSelector("option[value='" + id + "']")).click();
+        }
+      }
+      click(By.name("add"));
     }
+  }
 
 }
