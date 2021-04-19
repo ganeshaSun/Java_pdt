@@ -13,6 +13,7 @@ import ru.stqua.pft.addressbook.model.Contacts;
 import ru.stqua.pft.addressbook.model.GroupData;
 import ru.stqua.pft.addressbook.model.Groups;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -22,7 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactAddToGroupTest extends TestBase {
 
   private SessionFactory sessionFactory;
-  private List<GroupData> groupForAdding;
+  private List<GroupData> groupForAdding =new ArrayList<>();
   private ContactData contactAddToGroup;
 
   @BeforeClass
