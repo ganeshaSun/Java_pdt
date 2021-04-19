@@ -23,7 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactAddToGroupTest extends TestBase {
 
   private SessionFactory sessionFactory;
-  private List<GroupData> groupForAdding =new ArrayList<>();
+  private List<GroupData> groupForAdding =new ArrayList<GroupData>();
   private ContactData contactAddToGroup;
 
   @BeforeClass
@@ -51,26 +51,33 @@ public class ContactAddToGroupTest extends TestBase {
     List<ContactData> contactList = session.createQuery("from ContactData").list();
     List<GroupData> allGroupsList = session.createQuery("from GroupData").list();
     for (ContactData contact : contactList) {
+      if (contact.getGroups().size()==0){
+        GroupData gr = allGroupsList.iterator().next();
+        groupForAdding.add(gr);
+      }
       if (contact.getGroups().size() != allGroupsList.size()) {
         needToCreateGroup = false;
         contactAddToGroup = contact;
-        for (GroupData group : allGroupsList) {
-          for (GroupData g : contact.getGroups()) {
+        for (GroupData g : contact.getGroups()) {
+          for (GroupData group : allGroupsList) {
             if (group.getId() != g.getId()) {
               groupForAdding.add(group);
             }
           }
           break;
         }
+
       }
       if (needToCreateGroup == true) {
         app.goTo().groupPage();
         GroupData newGroup = new GroupData().withName("newGroup").withHeader("newGroupHeader");
         app.group().create(newGroup);
+        List<GroupData> groupsLstwithNew = session.createQuery("from GroupData").list();
+        groupForAdding.add(newGroup.withId(groupsLstwithNew.stream().mapToInt((g) -> g.getId()).max().getAsInt()));
+
         app.goTo().contactPage();
         Contacts c = app.db().contacts();
         contactAddToGroup = c.iterator().next();
-        groupForAdding.add(newGroup);
       }
       session.getTransaction().commit();
       session.close();

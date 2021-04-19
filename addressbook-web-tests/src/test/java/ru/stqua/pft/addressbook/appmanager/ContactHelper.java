@@ -154,11 +154,11 @@ public class ContactHelper extends HelperBase {
             .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
   }
 
-  public void addGroup(ContactData contact, List<GroupData> groupListforAdding) {
+  public void addGroup(ContactData contact, List<GroupData> groupForAdding) {
     selectContactById(contact.getId());
-    GroupData groupToAdd = groupListforAdding.iterator().next();
+    GroupData groupToAdd = groupForAdding.iterator().next();
     wd.findElement(By.cssSelector("option[value='" + groupToAdd.getId() + "']")).click();
-
+    click(By.name("add"));
   }
 
   public void removeGroup(ContactData contact) {
