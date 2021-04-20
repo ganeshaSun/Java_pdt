@@ -78,11 +78,7 @@ public class ContactAddToGroupTest extends TestBase {
         }
       }
       if (contact.getGroups().size() == allGroupsList.size()) {
-        GroupData newGroup = newGroupCreation();
-        List<GroupData> groupsLstwithNew = session.createQuery("from GroupData").list();
-        groupForAdding = newGroup.withId(groupsLstwithNew.stream()
-                .mapToInt((g) -> g.getId()).max().getAsInt());
-
+        groupForAdding = newGroupCreation();
         app.goTo().homePage();
         contactAddToGroup = contact;
       }
@@ -92,8 +88,10 @@ public class ContactAddToGroupTest extends TestBase {
 
   public GroupData newGroupCreation() {
     app.goTo().groupPage();
-    GroupData newGroup = new GroupData().withName("newGroup").withHeader("newGroupHeader");
+    GroupData newGroup = new GroupData().withName("newGroup!!").withHeader("newGroupHeader");
     app.group().create(newGroup);
+    newGroup = newGroup.withId(app.db().groups().stream()
+            .mapToInt((g) -> g.getId()).max().getAsInt());
     return newGroup;
   }
 
@@ -107,8 +105,6 @@ public class ContactAddToGroupTest extends TestBase {
     session.beginTransaction();
     return session;
   }
-
-
 
   public ContactData contactFromDbById(Session session) {
     return (ContactData) session.createQuery("from ContactData where id=" +

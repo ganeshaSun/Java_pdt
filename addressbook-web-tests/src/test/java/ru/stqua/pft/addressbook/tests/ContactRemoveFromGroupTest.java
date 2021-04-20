@@ -39,12 +39,23 @@ public class ContactRemoveFromGroupTest extends TestBase {
     }
   }
 
+  public void ensureNotEmptyLists(){
+    app.goTo().contactPage();
+    if (app.db().contacts().size()==0) {
+      app.goTo().groupPage();
+      if (app.db().groups().size()==0){
+        app.group().create(new GroupData().withName("test 1").withHeader("head").withFooter("footer"));
+      }
+      app.goTo().contactPage();
+      app.contact().create(new ContactData().withFirstName("TestName").withMiddlename("TestMiddleName")
+              .withLastname("Last").withAddress("196190 Saint-Petersburg, Moskovsky pr. 163").withCompany("Bookovsky")
+              .withHomePhone("88123456456").withMobilePhone("+78945634").withWorkPhone("123123").withEmail("testaddress@mail.ru"));
+    }
+  }
+
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().groupPage();
-    if (app.db().groups().size() == 0) {
-      app.group().create(new GroupData().withName("test1").withHeader("test2"));
-    }
+    ensureNotEmptyLists();
 
     Session session = openSessionDb();
     List<ContactData> contactList = session.createQuery("from ContactData").list();
