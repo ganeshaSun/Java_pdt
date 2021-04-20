@@ -13,7 +13,6 @@ import ru.stqua.pft.addressbook.model.Contacts;
 import ru.stqua.pft.addressbook.model.GroupData;
 import ru.stqua.pft.addressbook.model.Groups;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -23,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactAddToGroupTest extends TestBase {
 
   private SessionFactory sessionFactory;
-  private List<GroupData> groupForAdding =new ArrayList<GroupData>();
+  private GroupData groupForAdding;
   private ContactData contactAddToGroup;
 
   @BeforeClass
@@ -42,78 +41,102 @@ public class ContactAddToGroupTest extends TestBase {
     }
   }
 
+  public void ensureNotEmptyLists(){
+    app.goTo().contactPage();
+    if (app.db().contacts().size()==0) {
+      app.goTo().groupPage();
+      if (app.db().groups().size()==0){
+        app.group().create(new GroupData().withName("test 1").withHeader("head").withFooter("footer"));
+      }
+      app.goTo().contactPage();
+      app.contact().create(new ContactData().withFirstName("TestName").withMiddlename("TestMiddleName")
+              .withLastname("Last").withAddress("196190 Saint-Petersburg, Moskovsky pr. 163").withCompany("Bookovsky")
+              .withHomePhone("88123456456").withMobilePhone("+78945634").withWorkPhone("123123").withEmail("testaddress@mail.ru"));
+    }
+  }
+
   @BeforeMethod
   public void ensurePreconditions() {
-    boolean needToCreateGroup = true;
+    ensureNotEmptyLists();
 
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
+    Session session = openSessionDb();
     List<ContactData> contactList = session.createQuery("from ContactData").list();
     List<GroupData> allGroupsList = session.createQuery("from GroupData").list();
     for (ContactData contact : contactList) {
-      if (contact.getGroups().size()==0){
-        GroupData gr = allGroupsList.iterator().next();
-        groupForAdding.add(gr);
+      if (contact.getGroups().size() == 0) {
+        groupForAdding = allGroupsList.iterator().next();
+        contactAddToGroup = contact;
+        break;
       }
       if (contact.getGroups().size() != allGroupsList.size()) {
-        needToCreateGroup = false;
         contactAddToGroup = contact;
-        for (GroupData g : contact.getGroups()) {
-          for (GroupData group : allGroupsList) {
-            if (group.getId() != g.getId()) {
-              groupForAdding.add(group);
-            }
+        for (GroupData group : allGroupsList) {
+          if (contact.getGroups().stream().noneMatch(group::equals)) {
+            groupForAdding = group;
+            break;
           }
-          break;
         }
-
       }
-      if (needToCreateGroup == true) {
-        app.goTo().groupPage();
-        GroupData newGroup = new GroupData().withName("newGroup").withHeader("newGroupHeader");
-        app.group().create(newGroup);
+      if (contact.getGroups().size() == allGroupsList.size()) {
+        GroupData newGroup = newGroupCreation();
         List<GroupData> groupsLstwithNew = session.createQuery("from GroupData").list();
-        groupForAdding.add(newGroup.withId(groupsLstwithNew.stream().mapToInt((g) -> g.getId()).max().getAsInt()));
+        groupForAdding = newGroup.withId(groupsLstwithNew.stream()
+                .mapToInt((g) -> g.getId()).max().getAsInt());
 
-        app.goTo().contactPage();
-        Contacts c = app.db().contacts();
-        contactAddToGroup = c.iterator().next();
+        app.goTo().homePage();
+        contactAddToGroup = contact;
       }
-      session.getTransaction().commit();
-      session.close();
     }
+    closeSession(session);
+  }
+
+  public GroupData newGroupCreation() {
+    app.goTo().groupPage();
+    GroupData newGroup = new GroupData().withName("newGroup").withHeader("newGroupHeader");
+    app.group().create(newGroup);
+    return newGroup;
+  }
+
+  public void closeSession(Session session) {
+    session.getTransaction().commit();
+    session.close();
+  }
+
+  public Session openSessionDb() {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    return session;
+  }
+
+
+
+  public ContactData contactFromDbById(Session session) {
+    return (ContactData) session.createQuery("from ContactData where id=" +
+            contactAddToGroup.getId()).getSingleResult();
   }
 
   @Test
   public void testContactAddToGroup() {
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
+    Session session = openSessionDb();
 
-    ContactData beforeContact = (ContactData) session.createQuery("from ContactData where id=" +
-            contactAddToGroup.getId()).getSingleResult();
+    ContactData beforeContact = contactFromDbById(session);
     Groups beforeGroups = beforeContact.getGroups();
-    System.out.println("Before " + beforeContact);
-    System.out.println("groups linked before" + beforeContact.getGroups());
-    session.getTransaction().commit();
-    session.close();
+    closeSession(session);
 
-    app.goTo().contactPage();
-    app.contact().addGroup(contactAddToGroup, groupForAdding);
+    app.goTo().homePage();
+    app.contact().addContactToGroup(contactAddToGroup, groupForAdding);
 
     session = sessionFactory.openSession();
     session.beginTransaction();
-    ContactData afterContact = (ContactData) session.createQuery("from ContactData where id=" +
-            contactAddToGroup.getId()).getSingleResult();
+    ContactData afterContact = contactFromDbById(session);
     Groups afterGroups = afterContact.getGroups();
-    System.out.println("After " + afterContact);
-    System.out.println("groups linked after" + afterContact.getGroups());
-    session.getTransaction().commit();
-    session.close();
+    closeSession(session);
 
     assertThat(afterContact, equalTo(beforeContact));
     assertThat(afterGroups.size(), equalTo(beforeGroups.size() + 1));
     verifyContactListInUI();
   }
+
 
 }
 

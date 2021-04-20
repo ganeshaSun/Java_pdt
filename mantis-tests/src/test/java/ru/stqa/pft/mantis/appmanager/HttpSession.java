@@ -1,5 +1,6 @@
 package ru.stqa.pft.mantis.appmanager;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -10,7 +11,7 @@ import org.apache.http.impl.client.LaxRedirectStrategy;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.omg.CORBA.NameValuePair;
+
 
 import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
