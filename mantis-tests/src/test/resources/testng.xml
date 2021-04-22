@@ -2,9 +2,11 @@
 
 <suite name="Suite1" verbose="1" >
 
-    <test name="Contact">
+    <test name="Mantis">
         <classes>
             <class name="ru.stqa.pft.mantis.tests.LoginTests" />
+            <class name="ru.stqa.pft.mantis.tests.RegistrationTest" />
         </classes>
     </test>
 </suite>
+
