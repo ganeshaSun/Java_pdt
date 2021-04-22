@@ -37,7 +37,7 @@ public class HttpSession {
     params.add(new BasicNameValuePair("password",password));
     CloseableHttpResponse response2 = httpclient.execute(post);
     String body = geTextForm(response2);
-    return body.contains(String.format("\"username\"", username));
+    return body.contains(String.format("<span class=\"italic\">%s</span>", username));
   }
 
   private String geTextForm(CloseableHttpResponse response) throws IOException {
@@ -52,6 +52,6 @@ public class HttpSession {
     HttpGet get = new HttpGet(app.getProperty("web.baseUrl") +"/index.php");
     CloseableHttpResponse response = httpclient.execute(get);
     String body = geTextForm(response);
-    return body.contains(String.format("\"username\"", username));
+    return body.contains(String.format("<span class=\"italic\">%s</span>", username));
   }
 }
