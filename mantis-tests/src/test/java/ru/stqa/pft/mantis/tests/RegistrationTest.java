@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 import static ru.stqa.pft.mantis.tests.TestBase.app;
 
-public class RegistrationTest {
+public class RegistrationTest extends TestBase{
 
   @Test
   public void testRegistration(){
