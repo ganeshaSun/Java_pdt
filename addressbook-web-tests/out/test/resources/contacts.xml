@@ -1,0 +1,38 @@
+<list>
+  <group>
+    <firstname>TestName 0</firstname>
+    <middlename>TestMiddleName 0</middlename>
+    <lastname>Last 0</lastname>
+    <company>0 Bookovsky</company>
+    <address>0 196190 Saint-Petersburg, Moskovsky pr. 163</address>
+    <hometel>0 88123456456</hometel>
+    <mobile>+789456340</mobile>
+    <photo>src\test\resources\29.png</photo>
+    <work>0123123</work>
+    <email>0testaddress@mail.ru</email>
+  </group>
+  <group>
+    <firstname>TestName 1</firstname>
+    <middlename>TestMiddleName 1</middlename>
+    <lastname>Last 1</lastname>
+    <company>1 Bookovsky</company>
+    <address>1 196190 Saint-Petersburg, Moskovsky pr. 163</address>
+    <hometel>1 88123456456</hometel>
+    <mobile>+789456341</mobile>
+    <photo>src\test\resources\29.png</photo>
+    <work>1123123</work>
+    <email>1testaddress@mail.ru</email>
+  </group>
+  <group>
+    <firstname>TestName 2</firstname>
+    <middlename>TestMiddleName 2</middlename>
+    <lastname>Last 2</lastname>
+    <company>2 Bookovsky</company>
+    <address>2 196190 Saint-Petersburg, Moskovsky pr. 163</address>
+    <hometel>2 88123456456</hometel>
+    <mobile>+789456342</mobile>
+    <photo>src\test\resources\29.png</photo>
+    <work>2123123</work>
+    <email>2testaddress@mail.ru</email>
+  </group>
+</list>
