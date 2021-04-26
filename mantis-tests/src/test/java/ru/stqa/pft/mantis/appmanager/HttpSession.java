@@ -38,7 +38,7 @@ public class HttpSession {
     post.setEntity(new UrlEncodedFormEntity(params));
     CloseableHttpResponse response2 = httpclient.execute(post);
     String body = geTextForm(response2);
-    return body.contains(String.format("<span class=\"label hidden-xs label-default arrowed\">%s</span>" , username));
+    return body.contains(String.format("<span class=\"user-info\">%s</span>" , username));
   }
 
   private String geTextForm(CloseableHttpResponse response) throws IOException {

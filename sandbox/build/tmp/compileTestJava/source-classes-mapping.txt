@@ -1,0 +1,6 @@
+PointDistanceTests.java
+ PointDistanceTests
+EquationTests.java
+ EquationTests
+PrimeTests.java
+ PrimeTests
