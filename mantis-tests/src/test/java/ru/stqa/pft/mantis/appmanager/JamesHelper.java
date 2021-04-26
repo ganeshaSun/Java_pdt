@@ -38,15 +38,15 @@ public class JamesHelper {
 
   public void createUser(String name, String passwd) {
     initTelnetSession();
-    write("adduser" + name + " " + passwd);
-    String result = readUntil("User" + name + " added");
+    write("adduser " + name + " " + passwd);
+    String result = readUntil("User " + name + " added");
     closeTelnetSession();
   }
 
   public void deleteUser(String name) {
     initTelnetSession();
-    write("deluser" + name);
-    String result = readUntil("User" + name + " deleted");
+    write("deluser " + name);
+    String result = readUntil("User " + name + " deleted");
     closeTelnetSession();
   }
 
